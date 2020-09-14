@@ -1,0 +1,34 @@
+clear
+clc
+Ka=30;
+t=[0:0.01:1];
+nc=[Ka*5];
+dc=[1];
+sysc=tf(nc,dc);
+ng=[1];
+dg=[1 20 0];
+sysg=tf(ng,dg);
+sys=series(sysc,sysg);
+sys1=feedback(sys,[1]);
+%扰动的传递函数
+sysd=feedback(sysg,sysc);
+sysd1=-sysd;
+Ka=60;
+t=[0:0.01:1];
+nc=[Ka*5];
+dc=[1];
+sysc=tf(nc,dc);
+ng=[1];
+dg=[1 20 0];
+sysg=tf(ng,dg);
+sys=series(sysc,sysg);
+sys2=feedback(sys,[1]);
+%扰动的传递函数
+sysd=feedback(sysg,sysc);
+sysd2=-sysd;
+step(sys1,sys2,'--');
+hold on
+legend('Ka=30','Ka=60');
+step(sysd1,sysd2,'--');
+grid
+
